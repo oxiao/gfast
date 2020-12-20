@@ -8,11 +8,13 @@ import (
 	"github.com/gogf/gf/net/ghttp"
 )
 
-type Index struct{}
+type Index struct{
+	TemplatePath string
+}
 
 // 首页
 func (c *Index) Index(r *ghttp.Request) {
-	home.WriteTpl(r, "index.html")
+	home.WriteTpl(r, c.TemplatePath, "index.html")
 }
 
 // 列表页
@@ -43,7 +45,7 @@ func (c *Index) listInfo(r *ghttp.Request, args ...interface{}) {
 	} else {
 		tmp = "list/list.html"
 	}
-	home.WriteTpl(r, tmp, g.Map{
+	home.WriteTpl(r, c.TemplatePath, tmp, g.Map{
 		"list":      list,
 		"pageStyle": r.GetPage(total, pageSize).GetContent(4),
 		"menu":      menu,
@@ -76,7 +78,7 @@ func (c *Index) Show(r *ghttp.Request) {
 	// 获取当前栏目
 	menu, _ := cms_service.GetMenuInfoById(cateId)
 
-	home.WriteTpl(r, menu.ContentTemplate, g.Map{
+	home.WriteTpl(r, c.TemplatePath, menu.ContentTemplate, g.Map{
 		"content":  res[0],
 		"author":   res[1],
 		"newsInfo": newsInfo,

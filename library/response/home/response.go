@@ -22,13 +22,13 @@ type Response struct {
 
 var ResponseInstance Response
 
-func WriteTpl(r *ghttp.Request, tpl string, params ...gview.Params) error {
-	return ResponseInstance.WriteTpl(r, tpl, params...)
+func WriteTpl(r *ghttp.Request, tplPath string, tpl string, params ...gview.Params) error {
+	return ResponseInstance.WriteTpl(r, tplPath, tpl, params...)
 }
 
-func (res *Response) WriteTpl(r *ghttp.Request, tpl string, params ...gview.Params) error {
+func (res *Response) WriteTpl(r *ghttp.Request, tplPath string, tpl string, params ...gview.Params) error {
 	v := g.View()
-	v.SetPath("template/cms")
+	v.SetPath(tplPath)
 	//绑定模板中需要用到的方法
 	v.BindFuncMap(g.Map{
 		//获取导航菜单列表
